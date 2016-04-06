@@ -18,6 +18,7 @@ after_success:
 - ssh-add deploy-key
 - git config --global user.name "Travis CI"
 - git config --global user.email travis@spacet.me
+- echo wonderful.software > dist/CNAME
 - |
   node -e 'require("gulp").src("dist/**/*").pipe(require("gulp-gh-pages")({
     remoteUrl: "git@github.com:wonderfulsoftware/wonderful.software.git" }))'
