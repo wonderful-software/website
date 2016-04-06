@@ -1,0 +1,43 @@
+@require '~site/settings.styl'
+@import '../fonts/cschatthaiui.css'
+
+:root
+html
+  font-size $base-font-size
+  @media (max-width: 480px)
+    font-size ($base-font-size * 6 / 7)
+
+body
+  margin 0
+  padding 0
+  line-height beat(1)
+  font-family $main-font
+  color #353433
+
+a
+  color #069
+
+.root
+  display block
+
+.contents
+  display block
+
+.header
+  composes background-g100 from 'site/textures.styl'
+  composes font-size-0 from 'site/typography.styl'
+  color #605850
+  padding 0 beat(0.25)
+  height beat(1)
+  > a
+    font-weight bold
+    color inherit
+    text-decoration none
+
+.footer
+  display block
+  margin-top beat(1)
+  margin-bottom beat(0.5)
+  composes font-size-0 from 'site/typography.styl'
+  composes color-dim from 'site/textures.styl'
+  composes text-center from 'site/textures.styl'

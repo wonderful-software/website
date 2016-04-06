@@ -1,0 +1,138 @@
+@require '~site/settings.styl'
+@require '~site/texture-classes.styl'
+@require '~site/typography-classes.styl'
+
+base-typography-rules()
+  > *:first-child
+    margin-top 0
+  > h1
+  > h2
+  > h3
+  > h4
+  > h5
+  > h6
+  > p
+  > ul
+  > ol
+  > dl
+  > blockquote
+  > pre
+  > table
+    margin-bottom 0
+    margin-left 0
+    margin-right 0
+  > hr
+    height 0
+    background none
+    border-bottom 0
+    border-right 0
+    border-left 0
+    margin-bottom 0
+    @extend $divider
+  > h1
+    @extend $font-size-5
+  > h2
+    @extend $font-size-4
+  > h3
+    @extend $font-size-3
+  > h4
+    @extend $font-size-2
+  > h5
+    @extend $font-size-1
+  > h6
+    @extend $font-size-0
+
+setup-typography-rhythm(size)
+  line-height size
+  > h1
+  > h2
+  > h3
+  > h4
+  > h5
+  > h6
+  > p
+  > ul
+  > ol
+  > dl
+  > blockquote
+  > pre
+  > table
+  > hr
+  > :global(.footnotes)
+    &:not(:first-child)
+      margin-top size
+  > ul
+  > ol
+  > blockquote
+    padding-left size
+  > ul
+    list-style none
+  > ul > li
+    position relative
+  > ul > li::before
+    display inline-block
+    position absolute
+    content "·"
+    left -1em
+    transform scale(1.5)
+    transform-origin left
+
+enforce-typography-rules()
+  {block}
+  > blockquote
+  > ul > li
+  > ol > li
+  > dl > dd
+    {block}
+  > :global(.footnotes)
+    {block}
+    > ol > li
+      {block}
+
+.root
+  display block
+  word-wrap break-word
+
+  +enforce-typography-rules()
+    base-typography-rules()
+
+  :global
+    sup.footnote-ref
+      vertical-align baseline
+      display inline-block
+      position relative
+      top -1ex
+      > a
+        text-decoration none
+
+    a.footnote-backref
+      text-decoration none
+
+.root.is-main
+  > h1
+  > h2
+  > h3
+  > h4
+  > h5
+  > h6
+  > p
+  > ul
+  > ol
+  > dl
+  > blockquote
+  > pre
+  > table
+    width 700px
+    max-width "calc(100vw - %s)" % (beat(0.5))
+    margin-left auto
+    margin-right auto
+
+.size-normal
+  composes font-size-1 from 'site/typography.styl'
+  +enforce-typography-rules()
+    setup-typography-rhythm(beat(1))
+
+.size-small
+  composes font-size-0 from 'site/typography.styl'
+  +enforce-typography-rules()
+    setup-typography-rhythm(beat(3/4))
