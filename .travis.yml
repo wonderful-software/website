@@ -1,16 +1,22 @@
 sudo: false
-
 language: node_js
 node_js:
-  - 5
-
+- 5
 cache:
   directories:
-    - node_modules
-
-after_success:
-  - npm run build
-
+  - node_modules
 branches:
   only:
-    - master
+  - master
+before_install:
+- openssl aes-256-cbc -K $encrypted_491621c5ab65_key -iv $encrypted_491621c5ab65_iv
+  -in deploy-key.enc -out deploy-key -d
+after_success:
+- npm run build
+- chmod 400 deploy-key
+- eval "$(ssh-agent -s)"
+- ssh-add deploy-key
+- |
+  node -e 'require("gulp").src("dist/**/*").pipe(require("gulp-gh-pages")({
+    remoteUrl: "git@github.com:wonderfulsoftware/wonderful.software" }))'
+
