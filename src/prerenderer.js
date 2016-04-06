@@ -5,6 +5,7 @@ import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 import renderPage from './renderPage'
 import { pages } from './pages'
+import Helmet from 'react-helmet'
 
 export const output = { }
 const routes = { path: '/*', component: App }
@@ -14,7 +15,13 @@ for (const key of Object.keys(pages)) {
     match({ routes, location: key }, (error, redirectLocation, renderProps) => {
       if (error) return reject(error)
       const rendered = renderToString(h(RouterContext, renderProps))
-      return resolve({ body: rendered })
+      const head = Helmet.rewind()
+      const headHtml = [
+        head.title.toString(),
+        head.meta.toString(),
+        head.link.toString()
+      ]
+      return resolve({ body: rendered, head: headHtml })
     })
   })
 }
