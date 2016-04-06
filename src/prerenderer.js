@@ -20,7 +20,7 @@ for (const key of Object.keys(pages)) {
         head.title.toString(),
         head.meta.toString(),
         head.link.toString()
-      ]
+      ].join('')
       return resolve({ body: rendered, head: headHtml })
     })
   })
