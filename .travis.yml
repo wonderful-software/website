@@ -18,5 +18,5 @@ after_success:
 - ssh-add deploy-key
 - |
   node -e 'require("gulp").src("dist/**/*").pipe(require("gulp-gh-pages")({
-    remoteUrl: "git@github.com:wonderfulsoftware/wonderful.software" }))'
+    remoteUrl: "git@github.com:wonderfulsoftware/wonderful.software.git" }))'
 
