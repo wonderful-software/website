@@ -2,99 +2,101 @@
 @require '~site/texture-classes.styl'
 @require '~site/typography-classes.styl'
 
-base-typography-rules()
-  > *:first-child
+$p = ':global(.¶)'
+$h1 = ':global(.๑)'
+$h2 = ':global(.๒)'
+$h3 = ':global(.๓)'
+$h4 = ':global(.๔)'
+$h5 = ':global(.๕)'
+$h6 = ':global(.๖)'
+$ul = ':global(.•)'
+$ol = ':global(.№)'
+$li = ':global(.·)'
+$pre = ':global(.🄰)'
+$code = ':global(.𝚊)'
+$hr = ':global(.—)'
+$blockquote = ':global(.❝)'
+$footnote = ':global(.※)'
+
+all-types()
+  {$h1}, {$h2}, {$h3}, {$h4}, {$h5}, {$h6}, {$p}, {$ul}, {$ol}, {$li}, {$blockquote}, {$pre}
+    {block}
+
++all-types()
+  margin-bottom 0
+  margin-left 0
+  margin-right 0
+  &:first-child
     margin-top 0
-  > h1
-  > h2
-  > h3
-  > h4
-  > h5
-  > h6
-  > p
-  > ul
-  > ol
-  > dl
-  > blockquote
-  > pre
-  > table
-    margin-bottom 0
-    margin-left 0
-    margin-right 0
-  > hr
-    height 0
-    background none
-    border-bottom 0
-    border-right 0
-    border-left 0
-    margin-bottom 0
-    @extend $divider
-  > h1
-    @extend $font-size-5
-  > h2
-    @extend $font-size-4
-  > h3
-    @extend $font-size-3
-  > h4
-    @extend $font-size-2
-  > h5
-    @extend $font-size-1
-  > h6
-    @extend $font-size-0
+
+{$h1}
+  @extend $font-size-5
+{$h2}
+  @extend $font-size-4
+{$h3}
+  @extend $font-size-3
+{$h4}
+  @extend $font-size-2
+{$h5}
+  @extend $font-size-1
+{$h6}
+  @extend $font-size-0
+{$ul}
+  list-style none
+{$li}
+  position relative
+{$ul} > {$li}::before
+  display inline-block
+  position absolute
+  content "·"
+  left -1em
+  transform scale(1.5)
+  transform-origin left
+{$hr}
+  height 0
+  background none
+  border-bottom 0
+  border-right 0
+  border-left 0
+  margin-bottom 0
+  @extend $divider
 
 setup-typography-rhythm(size)
   line-height size
-  > h1
-  > h2
-  > h3
-  > h4
-  > h5
-  > h6
-  > p
-  > ul
-  > ol
-  > dl
-  > blockquote
-  > pre
-  > table
-  > hr
+  > {$h1}
+  > {$h2}
+  > {$h3}
+  > {$h4}
+  > {$h5}
+  > {$h6}
+  > {$p}
+  > {$ul}
+  > {$ol}
+  > {$blockquote}
+  > {$pre}
+  > {$hr}
   > :global(.footnotes)
     &:not(:first-child)
       margin-top size
-  > ul
-  > ol
-  > blockquote
+  > {$ul}
+  > {$ol}
+  > {$blockquote}
     padding-left size
-  > ul
-    list-style none
-  > ul > li
-    position relative
-  > ul > li::before
-    display inline-block
-    position absolute
-    content "·"
-    left -1em
-    transform scale(1.5)
-    transform-origin left
 
 enforce-typography-rules()
   {block}
-  > blockquote
-  > ul > li
-  > ol > li
-  > dl > dd
+  > {$blockquote}
+  > {$ul} > {$li}
+  > {$ol} > {$li}
     {block}
   > :global(.footnotes)
     {block}
-    > ol > li
+    > {$ol} > {$li}
       {block}
 
 .root
   display block
   word-wrap break-word
-
-  +enforce-typography-rules()
-    base-typography-rules()
 
   :global
     sup.footnote-ref
@@ -109,19 +111,17 @@ enforce-typography-rules()
       text-decoration none
 
 .root.is-main
-  > h1
-  > h2
-  > h3
-  > h4
-  > h5
-  > h6
-  > p
-  > ul
-  > ol
-  > dl
-  > blockquote
-  > pre
-  > table
+  > {$h1}
+  > {$h2}
+  > {$h3}
+  > {$h4}
+  > {$h5}
+  > {$h6}
+  > {$p}
+  > {$ul}
+  > {$ol}
+  > {$blockquote}
+  > {$pre}
     width 700px
     max-width "calc(100vw - %s)" % (beat(0.5))
     margin-left auto

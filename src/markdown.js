@@ -60,10 +60,30 @@ const markdownBreaks = (
 //   )
 // }
 
+
+function typographic (html) {
+  const $ = require('cheerio').load(html)
+  $('h1').addClass('๑')
+  $('h2').addClass('๒')
+  $('h3').addClass('๓')
+  $('h4').addClass('๔')
+  $('h5').addClass('๕')
+  $('h6').addClass('๖')
+  $('p').addClass('¶')
+  $('ul').addClass('•')
+  $('ol').addClass('№')
+  $('li').addClass('·')
+  $('pre').addClass('🄰')
+  $('code').addClass('𝚊')
+  $('blockquote').addClass('❝')
+  $('hr').addClass('—')
+  return $.html()
+}
+
 module.exports = body => {
-  return { __html: markdown.render(body) }
+  return { __html: typographic(markdown.render(body)) }
 }
 
 module.exports.withBreaks = body => {
-  return { __html: markdownBreaks.render(body) }
+  return { __html: typographic(markdownBreaks.render(body)) }
 }

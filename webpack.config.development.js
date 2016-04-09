@@ -1,14 +1,19 @@
 'use strict'
 
 const merge = require('webpack-merge')
+const webpack = require('webpack')
 
 module.exports = merge(require('./webpack.config')('development'), {
-  devServer: {
-    contentBase: __dirname + '/build',
-    historyApiFallback: {
-      index: '/assets/index.html'
-    }
+  entry: {
+    wonderfulsoftware: [
+      './src/index.js',
+      'webpack-hot-middleware/client'
+    ]
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ],
   output: {
     filename: '[id]-[name].js'
   },
