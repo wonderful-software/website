@@ -1,9 +1,7 @@
 import h from 'react-hyperscript'
-import React from 'react'
 import App from './App'
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
-import renderPage from './renderPage'
 import { pages } from './pages'
 import Helmet from 'react-helmet'
 

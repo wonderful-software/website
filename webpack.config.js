@@ -10,10 +10,16 @@ const makeCssLoader = {
   development: (post, pre) => [ post, 'style!css?modules&localIdentName=[path][name]---[local]---[hash:base64:5]&importLoaders=2', pre ].join('!')
 }
 
-const css = (loaders, env) => {
+const makeGlobalCssLoader = {
+  prerender: (post, pre) => [ post, 'css/locals', pre ].join('!'),
+  production: (post, pre) => post + '!' + ExtractTextPlugin.extract('style', 'css!' + pre),
+  development: (post, pre) => [ post, 'style!css', pre ].join('!')
+}
+
+const css = (loaders, env, options) => {
   const post = 'hyperstyles?h=react-hyperscript'
   const pre = [ 'postcss' ].concat(loaders).join('!')
-  return makeCssLoader[env](post, pre)
+  return (options.global ? makeGlobalCssLoader : makeCssLoader)[env](post, pre)
 }
 
 module.exports = env => {
@@ -46,12 +52,16 @@ module.exports = env => {
         },
         {
           test: /\.styl$/,
-          loader: css([ 'stylus' ], env)
+          loader: css([ 'stylus' ], env, { global: false })
         },
         {
-          test: /\.(gif|jpg|png)$/,
+          test: /\.css$/,
+          loader: css([ ], env, { global: true })
+        },
+        {
+          test: /\.(gif|jpg|png|svg)$/,
           loaders: [
-            { loader: 'url', query: { limit: 8192 } }
+            { loader: 'url', query: { limit: 4096 } }
           ]
         },
         {
