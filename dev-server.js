@@ -13,6 +13,7 @@ app.use(history({
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
+  stats: { colors: true },
   publicPath: webpackConfig.output.publicPath
 }))
 

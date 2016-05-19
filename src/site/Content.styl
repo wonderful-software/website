@@ -17,6 +17,7 @@ $code = ':global(.𝚊)'
 $hr = ':global(.—)'
 $blockquote = ':global(.❝)'
 $footnote = ':global(.※)'
+$cr = ':global(.↩︎)'
 
 all-types()
   {$h1}, {$h2}, {$h3}, {$h4}, {$h5}, {$h6}, {$p}, {$ul}, {$ol}, {$li}, {$blockquote}, {$pre}
@@ -60,6 +61,15 @@ all-types()
   border-left 0
   margin-bottom 0
   @extend $divider
+{$cr}
+  margin-left 0.1em
+  margin-right 0.1em
+{$pre}
+  @extend $font-size-0
+  line-height beat(0.75)
+{$pre}
+{$code}
+  font-family $code-font
 
 setup-typography-rhythm(size)
   line-height size

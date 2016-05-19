@@ -1,7 +1,7 @@
 'use strict'
 
-const katex = require('katex')
-
+// const katex = require('katex')
+//
 // const MATH_OPTIONS = {
 //   inlineOpen: '\\(',
 //   inlineClose: '\\)',
@@ -48,7 +48,7 @@ const markdownBreaks = (
   // .use(require('markdown-it-math'), MATH_OPTIONS)
 )
 
-// markdown.renderer.rules.softbreak = () => '<span class="Typeのเว้นวรรคใหญ่"> </span\n>'
+markdown.renderer.rules.softbreak = () => '<span class="↩︎"> </span\n>'
 
 // markdown.renderer.rules.fence = (tokens, idx, options, env, slf) => {
 //   const token = tokens[idx]
@@ -59,7 +59,6 @@ const markdownBreaks = (
 //     '</div>'
 //   )
 // }
-
 
 function typographic (html) {
   const $ = require('cheerio').load(html)

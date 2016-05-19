@@ -6,8 +6,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const makeCssLoader = {
   prerender: (post, pre) => [ post, 'css/locals?modules&importLoaders=2', pre ].join('!'),
-  production: (post, pre) => post + '!' + ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2!' + pre),
-  development: (post, pre) => [ post, 'style!css?modules&localIdentName=[path][name]---[local]---[hash:base64:5]&importLoaders=2', pre ].join('!')
+  production: (post, pre) => post + '!' + ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]の[local]／[hash:base64:7]&importLoaders=2!' + pre),
+  development: (post, pre) => [ post, 'style!css?modules&localIdentName=[name]の[local]／[hash:base64:7]&importLoaders=2', pre ].join('!')
 }
 
 const makeGlobalCssLoader = {
@@ -49,6 +49,11 @@ module.exports = env => {
           include: __dirname + '/src',
           test: /\.js$/,
           loaders: [ 'babel' ]
+        },
+        {
+          include: __dirname + '/src',
+          test: /\.md$/,
+          loaders: [ 'json', require.resolve('./src/markdown-loader') ]
         },
         {
           test: /\.styl$/,
