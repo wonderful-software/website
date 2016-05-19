@@ -1,5 +1,7 @@
 'use strict'
 
+const highlight = require('../code-highlighter')
+
 // const katex = require('katex')
 //
 // const MATH_OPTIONS = {
@@ -50,15 +52,15 @@ const markdownBreaks = (
 
 markdown.renderer.rules.softbreak = () => '<span class="↩︎"> </span\n>'
 
-// markdown.renderer.rules.fence = (tokens, idx, options, env, slf) => {
-//   const token = tokens[idx]
-//   const code = token.content
-//   return (
-//     '<div class="Typeのcode">' +
-//       renderCodeBlock(code, token.info) +
-//     '</div>'
-//   )
-// }
+markdown.renderer.rules.fence = (tokens, idx, options, env, slf) => {
+  const token = tokens[idx]
+  const code = token.content
+  return (
+    '<div class="❯"><pre><code>' +
+      highlight(code, 'javascript') +
+    '</code></pre></div>'
+  )
+}
 
 function typographic (html) {
   const $ = require('cheerio').load(html)

@@ -12,7 +12,13 @@ body
   padding 0
   line-height beat(1)
   font-family $main-font
+  background #fff
   color #353433
+  &:global(.リズム)
+    $rhythm = beat(1)
+    $prerhythm = beat(0.9)
+    $color = lighten(#605850, 90%)
+    background-image repeating-linear-gradient(to bottom, #fff 0px, #fff $prerhythm, $color $rhythm)
 
 a
   color #069

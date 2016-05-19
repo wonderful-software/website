@@ -15,6 +15,9 @@ set-font-size-exponent(exponent)
   @media (max-width: 720px)
     set-font-size 1rem * ((9 / 8) ** (exponent - 1))
 
+$font-size-minus-1
+  font-size (1rem / $normal-ratio / $normal-ratio)
+
 $font-size-0
   font-size (1rem / $normal-ratio)
 

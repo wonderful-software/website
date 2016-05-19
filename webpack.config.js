@@ -53,7 +53,7 @@ module.exports = env => {
         {
           include: __dirname + '/src',
           test: /\.md$/,
-          loaders: [ 'json', require.resolve('./src/markdown-loader') ]
+          loaders: [ 'json', require.resolve('./src/markdown/markdown-loader') ]
         },
         {
           test: /\.styl$/,
