@@ -56,9 +56,7 @@ markdown.renderer.rules.fence = (tokens, idx, options, env, slf) => {
   const token = tokens[idx]
   const code = token.content
   return (
-    '<div class="❯ △"><pre><code>' +
-      highlight(code, 'javascript') +
-    '</code></pre></div>'
+    '<div class="❯ △"><x-code-block code="' + new Buffer(code).toString('base64') + '"></x-code-block></div>'
   )
 }
 

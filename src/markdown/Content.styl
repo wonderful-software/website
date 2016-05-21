@@ -67,18 +67,10 @@ all-types()
 {$cr}
   margin-left 0.1em
   margin-right 0.1em
-{$pre}
-  @extend $font-size-minus-1
-  line-height beat(0.6666667)
-  $border-width = 1px
-  $padding = beat(0.5)
-  border $border-width solid #dfdcd8
-  padding "calc(%s - %s)" % ($padding $border-width)
-  border-radius beat(0.25)
-  overflow-x auto
-{$pre},
 {$code}
   font-family $code-font
+  font-size 85%
+
 :global(.footnotes) > {$ol}
   list-style-type decimal
 :global(.footnote-ref)
