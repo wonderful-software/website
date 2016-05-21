@@ -55,6 +55,7 @@
   "dependencies": {
     "classnames": "^2.2.3",
     "codemirror": "github:codemirror/CodeMirror",
+    "fg-loadcss": "^1.2.0",
     "highlight-with-codemirror": "^1.0.0",
     "hyperstyles": "^3.3.1",
     "katex": "^0.5.1",
