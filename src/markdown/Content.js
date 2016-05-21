@@ -13,7 +13,13 @@ function createUnpacker (map) {
   return function unpack (element) {
     if (Array.isArray(element)) {
       const [ name, props, ...children ] = element
-      return React.createElement(map[name] || name, props, ...children.map(unpack))
+      const unpackedChildren = children.map(unpack)
+      if (map[name]) {
+        const parsedProps = JSON.parse(props.props)
+        return React.createElement(map[name], parsedProps, ...unpackedChildren)
+      } else {
+        return React.createElement(name, props, ...unpackedChildren)
+      }
     } else {
       return element
     }

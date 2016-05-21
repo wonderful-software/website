@@ -9,8 +9,7 @@ function renderCode (code) {
 
 export const CodeBlock = React.createClass({
   render () {
-    const code = new Buffer(this.props.code, 'base64').toString('utf8')
-    return h('pre.root', { dangerouslySetInnerHTML: renderCode(code) })
+    return h('pre.root', { dangerouslySetInnerHTML: renderCode(this.props.code) })
   }
 })
 
