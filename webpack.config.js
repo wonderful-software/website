@@ -46,6 +46,11 @@ module.exports = env => {
         'ws': path.resolve(__dirname, 'src')
       }
     },
+    resolveLoader: {
+      alias: {
+        'markdown-loader': require.resolve('./src/markdown/markdown-loader')
+      }
+    },
     module: {
       loaders: [
         {
@@ -56,7 +61,7 @@ module.exports = env => {
         {
           include: path.resolve(__dirname, 'src'),
           test: /\.md$/,
-          loaders: [ 'json', require.resolve('./src/markdown/markdown-loader') ]
+          loaders: [ 'json', 'markdown-loader' ]
         },
         {
           test: /\.styl$/,
