@@ -9,4 +9,4 @@ const routes = { path: '/*', component: App }
 const router = h(Router, { history: browserHistory, routes: routes })
 render(router, document.getElementById('react'))
 
-loadCSS('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic|Roboto+Mono:400,700')
+loadCSS('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic,700italic|Roboto+Mono:400,700')
