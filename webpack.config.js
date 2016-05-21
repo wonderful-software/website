@@ -59,6 +59,13 @@ module.exports = env => {
           loaders: [ 'babel' ]
         },
         {
+          include: [
+            require.resolve('highlight-with-codemirror/HTMLBuilder'),
+            require.resolve('highlight-with-codemirror')
+          ],
+          loaders: [ 'babel' ]
+        },
+        {
           include: path.resolve(__dirname, 'src'),
           test: /\.md$/,
           loaders: [ 'json', 'markdown-loader' ]
