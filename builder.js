@@ -9,7 +9,7 @@ const path = require('path')
 function inlineStyle (html) {
   if (!html) return html
   return html.replace(/<link href="\/assets\/([^"]+\.css)" rel="stylesheet">/, (a, b) => {
-    return '<style>' + fs.readFileSync('dist/assets/' + b, 'utf8') + '</style>'
+    return '<style>' + fs.readFileSync('build/assets/' + b, 'utf8') + '</style>'
   })
 }
 
