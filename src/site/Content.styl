@@ -80,6 +80,11 @@ all-types()
   font-family $code-font
 :global(.footnotes) > {$ol}
   list-style-type decimal
+:global(.footnote-ref)
+  font-weight 600
+  > a
+    color inherit
+    opacity 0.5
 
 setup-typography-rhythm(size)
   > {$h1}

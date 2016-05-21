@@ -1,5 +1,6 @@
 'use strict'
 
+const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -28,30 +29,30 @@ module.exports = env => {
       wonderfulsoftware: './src/index.js'
     },
     output: {
-      path: __dirname + '/build/assets',
+      path: path.resolve(__dirname, 'build/assets'),
       filename: '[name]-[hash].js',
       publicPath: '/assets/'
     },
     plugins: [
       new webpack.optimize.OccurrenceOrderPlugin(),
       new HtmlWebpackPlugin({
-        template: __dirname + '/src/index.html'
+        template: path.resolve(__dirname, 'src/index.html')
       })
     ],
     resolve: {
       alias: {
-        site: __dirname + '/src/site'
+        'site': path.resolve(__dirname, 'src/site')
       }
     },
     module: {
       loaders: [
         {
-          include: __dirname + '/src',
+          include: path.resolve(__dirname, 'src'),
           test: /\.js$/,
           loaders: [ 'babel' ]
         },
         {
-          include: __dirname + '/src',
+          include: path.resolve(__dirname, 'src'),
           test: /\.md$/,
           loaders: [ 'json', require.resolve('./src/markdown/markdown-loader') ]
         },
