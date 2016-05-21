@@ -1,4 +1,4 @@
-import Layout from 'site/Layout'
+import Layout from 'ws/site/Layout'
 
 import h from './index.html.styl'
 

@@ -1,6 +1,6 @@
-@require '~site/settings.styl'
-@require '~site/texture-classes.styl'
-@require '~site/typography-classes.styl'
+@require '~ws/site/settings.styl'
+@require '~ws/site/texture-classes.styl'
+@require '~ws/site/typography-classes.styl'
 
 $p = ':global(.¶)'
 $h1 = ':global(.๑)'
@@ -126,7 +126,7 @@ setup-typography-rhythm(size)
   margin-right auto
 
 .size-normal
-  composes font-size-1 from 'site/typography.styl'
+  composes font-size-1 from 'ws/site/typography.styl'
   line-height beat(1)
   setup-typography-rhythm(beat(1))
   :global(.footnotes)

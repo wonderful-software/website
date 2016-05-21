@@ -43,7 +43,7 @@ module.exports = env => {
     ],
     resolve: {
       alias: {
-        'site': path.resolve(__dirname, 'src/site')
+        'ws': path.resolve(__dirname, 'src')
       }
     },
     module: {
