@@ -64,6 +64,11 @@ module.exports = env => {
           loaders: [ 'json', 'markdown-loader' ]
         },
         {
+          include: path.resolve(__dirname, 'src'),
+          test: /\.yml$/,
+          loaders: [ 'json', 'yaml' ]
+        },
+        {
           test: /\.styl$/,
           loader: css([ 'stylus' ], env, { global: false })
         },
