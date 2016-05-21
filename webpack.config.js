@@ -5,10 +5,12 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+const CSS_LOADER_OPTIONS = 'modules&localIdentName=[name]の[local]／[hash:base64:7]&importLoaders=2'
+
 const makeCssLoader = {
-  prerender: (post, pre) => [ post, 'css/locals?modules&importLoaders=2', pre ].join('!'),
-  production: (post, pre) => post + '!' + ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]の[local]／[hash:base64:7]&importLoaders=2!' + pre),
-  development: (post, pre) => [ post, 'style!css?modules&localIdentName=[name]の[local]／[hash:base64:7]&importLoaders=2', pre ].join('!')
+  prerender: (post, pre) => [ post, 'css/locals?' + CSS_LOADER_OPTIONS, pre ].join('!'),
+  production: (post, pre) => post + '!' + ExtractTextPlugin.extract('style', 'css?' + CSS_LOADER_OPTIONS + '!' + pre),
+  development: (post, pre) => [ post, 'style!css?' + CSS_LOADER_OPTIONS, pre ].join('!')
 }
 
 const makeGlobalCssLoader = {
