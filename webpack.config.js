@@ -14,9 +14,9 @@ const makeCssLoader = {
 }
 
 const makeGlobalCssLoader = {
-  prerender: (post, pre) => [ post, 'css/locals', pre ].join('!'),
-  production: (post, pre) => post + '!' + ExtractTextPlugin.extract('style', 'css!' + pre),
-  development: (post, pre) => [ post, 'style!css', pre ].join('!')
+  prerender: (post, pre) => [ 'css/locals', pre ].join('!'),
+  production: (post, pre) => ExtractTextPlugin.extract('style', 'css!' + pre),
+  development: (post, pre) => [ 'style!css', pre ].join('!')
 }
 
 const css = (loaders, env, options) => {
@@ -70,11 +70,16 @@ module.exports = env => {
         },
         {
           test: /\.styl$/,
+          exclude: /\.global\.styl$/,
           loader: css([ 'stylus' ], env, { global: false })
         },
         {
           test: /\.css$/,
           loader: css([ ], env, { global: true })
+        },
+        {
+          test: /\.global\.styl$/,
+          loader: css([ 'stylus' ], env, { global: true })
         },
         {
           test: /\.(gif|jpg|png|svg)$/,

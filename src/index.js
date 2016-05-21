@@ -1,12 +1,9 @@
-import App from './App'
-import h from 'react-hyperscript'
-import { render } from 'react-dom'
-import { Router, browserHistory } from 'react-router'
 import { loadCSS } from 'fg-loadcss'
-import './index.styl'
-
-const routes = { path: '/*', component: App }
-const router = h(Router, { history: browserHistory, routes: routes })
-render(router, document.getElementById('react'))
+import './index.global.styl'
 
 loadCSS('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,600,700,400italic,600italic,700italic|Roboto+Mono:400,700|Kanit:200')
+
+System.import('./runPage.js').then(
+  ({ runPage }) => { runPage() },
+  (e) => console.error('Cannot run page!', e)
+)

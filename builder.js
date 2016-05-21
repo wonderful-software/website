@@ -2,15 +2,20 @@
 
 const fs = require('fs')
 const files = require('./build/prerenderer/prerenderer').output
-const template = require('fs').readFileSync('./build/assets/index.html', 'utf8')
+const template = inlineStuff(require('fs').readFileSync('./build/assets/index.html', 'utf8'))
 const mkdirp = require('mkdirp')
 const path = require('path')
 
-function inlineStyle (html) {
+function inlineStuff (html) {
   if (!html) return html
-  return html.replace(/<link href="\/assets\/([^"]+\.css)" rel="stylesheet">/, (a, b) => {
-    return '<style>' + fs.readFileSync('build/assets/' + b, 'utf8') + '</style>'
-  })
+  return (html
+    .replace(/<link href="\/assets\/([^"]+\.css)" rel="stylesheet">/, (a, b) => {
+      return '<style>' + fs.readFileSync('build/assets/' + b, 'utf8') + '</style>'
+    })
+    .replace(/<script type="text\/javascript" src="\/assets\/([^"]+\.js)"><\/script>/, (a, b) => {
+      return '<script>' + fs.readFileSync('build/assets/' + b, 'utf8') + '</script>'
+    })
+  )
 }
 
 for (const file of Object.keys(files)) {
@@ -20,7 +25,7 @@ for (const file of Object.keys(files)) {
     const html = template.replace(/<!--#(\w+)-->/g, (a, x) => {
       return result[x] || a
     })
-    fs.writeFileSync(out, inlineStyle(html))
+    fs.writeFileSync(out, html)
     console.log('Wriiten to ' + out)
   })
   .catch(e => {
