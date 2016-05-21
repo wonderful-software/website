@@ -56,7 +56,7 @@ markdown.renderer.rules.fence = (tokens, idx, options, env, slf) => {
   const token = tokens[idx]
   const code = token.content
   return (
-    '<div class="❯"><pre><code>' +
+    '<div class="❯ △"><pre><code>' +
       highlight(code, 'javascript') +
     '</code></pre></div>'
   )
@@ -64,27 +64,24 @@ markdown.renderer.rules.fence = (tokens, idx, options, env, slf) => {
 
 function typographic (html) {
   const $ = require('cheerio').load(html)
-  $('h1').addClass('๑')
-  $('h2').addClass('๒')
-  $('h3').addClass('๓')
-  $('h4').addClass('๔')
-  $('h5').addClass('๕')
-  $('h6').addClass('๖')
-  $('p').addClass('¶')
-  $('ul').addClass('•')
-  $('ol').addClass('№')
-  $('li').addClass('·')
+  $(':root').filter('h1, h2, h3, h4, h5, h6, p, ul, ol, pre, blockquote, .footnotes, .❯').addClass('‼︎')
+  $('h1').addClass('๑ △')
+  $('h2').addClass('๒ △')
+  $('h3').addClass('๓ △')
+  $('h4').addClass('๔ △')
+  $('h5').addClass('๕ △')
+  $('h6').addClass('๖ △')
+  $('p').addClass('¶ △')
+  $('ul').addClass('• △ ▷')
+  $('ol').addClass('№ △ ▷')
+  $('li').addClass('· △')
   $('pre').addClass('🄰')
   $('code').addClass('𝚊')
-  $('blockquote').addClass('❝')
-  $('hr').addClass('—')
+  $('blockquote').addClass('❝ ☐ ▷')
+  $('hr').addClass('— △')
   return $.html()
 }
 
 module.exports = body => {
-  return { __html: typographic(markdown.render(body)) }
-}
-
-module.exports.withBreaks = body => {
-  return { __html: typographic(markdownBreaks.render(body)) }
+  return '<div class="☐">' + typographic(markdown.render(body)) + '</div>'
 }

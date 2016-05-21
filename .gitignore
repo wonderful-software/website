@@ -53,3 +53,5 @@ deploy-key
 .publish
 
 /_drafts/
+
+.nyc_output

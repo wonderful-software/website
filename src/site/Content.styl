@@ -88,46 +88,19 @@ all-types()
     opacity 0.5
 
 setup-typography-rhythm(size)
-  > {$h1}
-  > {$h2}
-  > {$h3}
-  > {$h4}
-  > {$h5}
-  > {$h6}
-  > {$p}
-  > {$ul}
-  > {$ol}
-  > {$blockquote}
-  > {$pre}
-  > {$hr}
-  > {$codeblock}
-  > :global(.footnotes)
-    &:not(:first-child)
-      margin-top size
-  > {$ul}
-  > {$ol}
-  > {$blockquote}
+  :global(.△):not(:first-child),
+  :global(.footnotes-list)
+    margin-top size
+  :global(.▷)
     padding-left (size)
-  > {$ul} > {$li}
-  > {$ol} > {$li}
+  {$li}
     padding-left (size / 4)
     &:not(:first-child)
       margin-top (size / 2)
     &:not(:first-child) > {$p}
       margin-top (size)
-  > {$h1} + {$h2}
+  {$h1} + {$h2}
     margin-top (size / 2)
-
-enforce-typography-rules()
-  {block}
-  > {$blockquote}
-  > {$ul} > {$li}
-  > {$ol} > {$li}
-    {block}
-  > :global(.footnotes)
-    {block}
-    > {$ol} > {$li}
-      {block}
 
 .root
   display block
@@ -145,39 +118,19 @@ enforce-typography-rules()
     a.footnote-backref
       text-decoration none
 
-.root.is-main
-  > {$h1}
-  > {$h2}
-  > {$h3}
-  > {$h4}
-  > {$h5}
-  > {$h6}
-  > {$p}
-  > {$ul}
-  > {$ol}
-  > {$blockquote}
-  > {$pre}
-  > {$codeblock}
-  > :global(.footnotes)
-    width 700px
-    box-sizing border-box
-    max-width "calc(100vw - %s)" % (beat(0.5))
-    margin-left auto
-    margin-right auto
+.root.is-main > :global(.☐) > :global(.‼︎)
+  width 700px
+  box-sizing border-box
+  max-width "calc(100vw - %s)" % (beat(0.5))
+  margin-left auto
+  margin-right auto
 
 .size-normal
   composes font-size-1 from 'site/typography.styl'
   line-height beat(1)
-  +enforce-typography-rules()
-    setup-typography-rhythm(beat(1))
-  > :global(.footnotes)
+  setup-typography-rhythm(beat(1))
+  :global(.footnotes)
     @extend $font-size-0
     line-height beat(5 / 6)
     > {$ol} > {$li} > {$p}:not(:first-child)
       margin-top beat(5 / 6)
-
-.size-small
-  composes font-size-0 from 'site/typography.styl'
-  line-height beat(3/4)
-  +enforce-typography-rules()
-    setup-typography-rhythm(beat(3/4))
