@@ -1,16 +1,27 @@
 @require './texture-classes.styl'
 
+$main-gray = #f5f4f3
+
+.background-g50
+  background-color mix($main-gray, white)
+
 .background-g100
-  background-color #f5f4f3
-
-.background-g200
-  background-color #dfdcd8
-
-.box2-g200
-  border 2px solid #dfdcd8
+  background-color $main-gray
 
 .text-center
   text-align center
 
 .color-dim
   color #999
+
+.color-g300
+  color darken($main-gray, 40%)
+
+.color-g400
+  color darken($main-gray, 40%)
+
+.color-g500
+  color darken($main-gray, 50%)
+
+.color-g600
+  color darken($main-gray, 60%)

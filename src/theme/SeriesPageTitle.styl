@@ -1,7 +1,7 @@
 @require '~ws/theme/settings.styl'
 
 .root
-  background rgba(#f5f4f3, 0.5)
+  composes background-g50 from './textures.styl'
   text-align center
   margin-bottom beat(1)
   padding-top beat(0.5)
@@ -9,11 +9,13 @@
 
 .title
   composes font-size-7 from './typography.styl'
+  composes color-g600 from './textures.styl'
   margin 0
   font-weight 200
 
 .subtitle
   composes font-size-3 from './typography.styl'
+  composes color-g600 from './textures.styl'
   margin 0
   font-weight 200
   font-family $thai-head-font
