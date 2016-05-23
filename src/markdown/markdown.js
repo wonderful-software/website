@@ -3,47 +3,10 @@
 const escapeHtml = require('escape-html')
 const highlight = require('../code-highlighter/index')
 
-// const katex = require('katex')
-//
-// const MATH_OPTIONS = {
-//   inlineOpen: '\\(',
-//   inlineClose: '\\)',
-//   blockOpen: '\\[',
-//   blockClose: '\\]',
-//   inlineRenderer: str => katex.renderToString(str),
-//   blockRenderer: str => {
-//     const LARGE_RE = /%large\s*$/
-//     let large = false
-//     if (str.match(LARGE_RE)) {
-//       str = str.replace(LARGE_RE, '')
-//       large = true
-//     }
-//     const className = classNames('TypeのdisplayMath', { 'is-large': large })
-//     return (
-//       `<p class="${className}"><span class="Typeのmath">` +
-//       `<span class="TypeのmathPlaceholder">${escapeHtml(str)}</span>` +
-//       `<script type="math/tex; mode=display">\\begin{align*}${str}\\end{align*}</script>` +
-//       `</span></p>`
-//     )
-//   }
-// }
-
 const markdown = (
   require('markdown-it')({
     html: true,
     typographer: true,
-    linkify: true
-  })
-  .use(require('markdown-it-footnote'))
-  .use(require('markdown-it-deflist'))
-  // .use(require('markdown-it-math'), MATH_OPTIONS)
-)
-
-const markdownBreaks = (
-  require('markdown-it')({
-    html: true,
-    typographer: true,
-    breaks: true,
     linkify: true
   })
   .use(require('markdown-it-footnote'))
