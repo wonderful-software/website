@@ -22,7 +22,7 @@ markdown.renderer.rules.softbreak = () => '<span class="↩︎"> </span\n>'
 
 markdown.renderer.rules.fence = (tokens, idx, options, env, slf) => {
   const token = tokens[idx]
-  const code = token.content
+  const code = token.content.replace(/\s+$/, '')
   return (
     '<div class="❯ △">' + x('x-code-block', { code: code }, highlight(code, 'javascript')) + '</div>'
   )
