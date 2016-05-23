@@ -1,6 +1,7 @@
 'use strict'
 
 const escapeHtml = require('escape-html')
+const highlight = require('../code-highlighter/index')
 
 // const katex = require('katex')
 //
@@ -50,8 +51,8 @@ const markdownBreaks = (
   // .use(require('markdown-it-math'), MATH_OPTIONS)
 )
 
-function x (name, props) {
-  return `<${name} props="${escapeHtml(JSON.stringify(props))}"></${name}>`
+function x (name, props, children = '') {
+  return `<${name} props="${escapeHtml(JSON.stringify(props))}">${children}</${name}>`
 }
 
 markdown.renderer.rules.softbreak = () => '<span class="↩︎"> </span\n>'
@@ -60,7 +61,7 @@ markdown.renderer.rules.fence = (tokens, idx, options, env, slf) => {
   const token = tokens[idx]
   const code = token.content
   return (
-    '<div class="❯ △">' + x('x-code-block', { code: code }) + '</div>'
+    '<div class="❯ △">' + x('x-code-block', { code: code }, highlight(code, 'javascript')) + '</div>'
   )
 }
 
