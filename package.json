@@ -24,6 +24,7 @@
     "babel-preset-stage-2": "^6.5.0",
     "cheerio": "^0.20.0",
     "connect-history-api-fallback": "^1.2.0",
+    "critical": "^0.7.2",
     "css-loader": "^0.23.1",
     "escape-html": "^1.0.3",
     "express": "^4.13.4",
