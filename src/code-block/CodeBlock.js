@@ -7,18 +7,21 @@ import 'codemirror/lib/codemirror.css'
 const getCodeMirror = _.once(() => System.import('./codemirror'))
 
 export const CodeBlock = React.createClass({
+  getDefaultProps () {
+    return { editable: false }
+  },
   getInitialState () {
     return { editing: false }
   },
   render () {
-    if (this.state.editing) {
+    if (this.props.editable && this.state.editing) {
       return h('div.root', { ref: (element) => (this._cmContainer = element) })
     } else {
       return h('pre.root', { }, this.props.children)
     }
   },
   componentDidMount () {
-    if (!this.state.editing) {
+    if (this.props.editable && !this.state.editing) {
       if (!this._loadingEditor) {
         this._loadingEditor = true
         getCodeMirror().then(({ CodeMirror }) => {

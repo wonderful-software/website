@@ -2,6 +2,7 @@
 
 const escapeHtml = require('escape-html')
 const highlight = require('../code-highlighter/index')
+const yaml = require('js-yaml')
 
 const markdown = (
   require('markdown-it')({
@@ -20,11 +21,37 @@ function x (name, props, children = '') {
 
 markdown.renderer.rules.softbreak = () => '<span class="↩︎"> </span\n>'
 
+function extractCodeProps (code) {
+  const props = { }
+  return [
+    code.replace(/^\s*\/\/!(.+)\n*/, (a, b) => {
+      Object.assign(props, yaml.safeLoad(b))
+      return ''
+    }),
+    props
+  ]
+}
+
+function parseLanguage (info) {
+  switch (info) {
+    case 'js':
+    case 'javascript':
+      return 'javascript'
+    default:
+      return ''
+  }
+}
+
 markdown.renderer.rules.fence = (tokens, idx, options, env, slf) => {
   const token = tokens[idx]
-  const code = token.content.replace(/\s+$/, '')
+  const info = token.info || ''
+  const language = parseLanguage(info)
+  const [ code, extraProps ] = extractCodeProps(token.content.replace(/\s+$/, ''))
+  const props = Object.assign({ }, extraProps, { code, language })
   return (
-    '<div class="❯ △">' + x('x-code-block', { code: code }, highlight(code, 'javascript')) + '</div>'
+    '<div class="❯ △">' +
+      x('x-code-block', props, highlight(code, 'javascript')) +
+    '</div>'
   )
 }
 
