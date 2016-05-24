@@ -33,7 +33,7 @@ function lazy (loadModule) {
     render () {
       if (this.state.status === 'completed') {
         const Component = this.state.component
-        return h(Component, this.props)
+        return h(Component, { ...this.props })
       } else if (this.state.status === 'error') {
         return h('div', 'ERROR!!!')
       } else if (this.state.status === 'loading') {
