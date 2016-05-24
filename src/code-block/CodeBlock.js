@@ -3,6 +3,7 @@ import React from 'react'
 import h from './CodeBlock.styl'
 import _ from 'lodash'
 import 'codemirror/lib/codemirror.css'
+import { connect } from 'react-redux'
 
 const getCodeMirror = _.once(() => System.import('./codemirror'))
 
@@ -21,6 +22,9 @@ export const CodeBlock = React.createClass({
     }
   },
   componentDidMount () {
+    if (this.props.name) {
+      this.props.onTextUpdate(this.props.code)
+    }
     if (this.props.editable && !this.state.editing) {
       if (!this._loadingEditor) {
         this._loadingEditor = true
@@ -42,9 +46,20 @@ export const CodeBlock = React.createClass({
           viewportMargin: Infinity,
           theme: 'wonderfulsoftware'
         })
+        this._codeMirror.on('change', () => {
+          if (this.props.name) {
+            this.props.onTextUpdate(this._codeMirror.getValue())
+          }
+        })
       }
     }
   }
 })
 
-export default CodeBlock
+export default connect(() => ({ }), (dispatch, props) => ({
+  onTextUpdate: (text) => dispatch({
+    type: 'REGISTER_CODE',
+    key: props.name,
+    value: text
+  })
+}))(CodeBlock)

@@ -93,6 +93,11 @@ setup-typography-rhythm(size)
       margin-top (size)
   {$h1} + {$h2}
     margin-top (size / 2)
+  :global(.☐) > figure
+    margin-top 0
+    margin-bottom 0
+    &:not(:first-child)
+      margin-top size
 
 .root
   display block
@@ -110,7 +115,8 @@ setup-typography-rhythm(size)
     a.footnote-backref
       text-decoration none
 
-.root.is-main > :global(.☐) > :global(.‼︎)
+.root.is-main > :global(.☐) > :global(.‼︎),
+.root.is-main > :global(.☐) > figure
   width 700px
   box-sizing border-box
   max-width "calc(100vw - %s)" % (beat(0.5))
@@ -126,3 +132,17 @@ setup-typography-rhythm(size)
     line-height beat(5 / 6)
     > {$ol} > {$li} > {$p}:not(:first-child)
       margin-top beat(5 / 6)
+
+.lazyWidget
+  composes font-size-minus-1 from 'ws/theme/typography.styl'
+  composes text-center from 'ws/theme/textures.styl'
+  line-height beat(0.6666667)
+  $border-width = 2px
+  $padding = beat(0.5)
+  border $border-width dashed #dfdcd8
+  padding "calc(%s - %s)" % ($padding $border-width)
+  border-radius beat(0.25)
+  overflow-x auto
+
+.isLoading
+  composes color-g500 from 'ws/theme/textures.styl'
