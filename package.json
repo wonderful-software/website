@@ -11,15 +11,20 @@
     "postbuild": "cp -r build/assets dist/assets",
     "prebuild": "rm -rf dist && npm run build:assets && npm run build:prerender",
     "prebuild:assets": "rm -rf build/assets",
-    "test": "nyc -r lcovonly mocha src/**/*.spec.js",
+    "test": "nyc -r lcovonly mocha src/**/*.node.spec.js",
     "lint": "standard src/**/*.js"
+  },
+  "standard": {
+    "parser": "babel-eslint"
   },
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
   "license": "CC-BY-NC-SA-4.0",
   "devDependencies": {
     "autoprefixer": "^6.3.5",
     "babel-core": "^6.9.0",
+    "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
+    "babel-plugin-transform-runtime": "^6.9.0",
     "babel-preset-es2015-webpack": "^6.4.1",
     "babel-preset-stage-2": "^6.5.0",
     "cheerio": "^0.20.0",
@@ -46,19 +51,23 @@
     "mocha": "^2.4.5",
     "nyc": "^6.4.4",
     "postcss-loader": "^0.8.2",
+    "script-loader": "^0.7.0",
     "standard": "^7.1.0",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.1.0",
+    "test-bed": "github:taskworld/test-bed",
     "url-loader": "^0.5.7",
     "webpack": "^2.1.0-beta.7",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^2.0.0-beta",
     "webpack-hot-middleware": "^2.10.0",
     "webpack-merge": "^0.8.4",
+    "worker-loader": "^0.7.0",
     "yaml-loader": "^0.1.0"
   },
   "dependencies": {
+    "babel-runtime": "^6.9.0",
     "classnames": "^2.2.3",
     "codemirror": "github:codemirror/CodeMirror",
     "fg-loadcss": "^1.2.0",
@@ -80,6 +89,7 @@
     "rx": "^4.1.0",
     "rx-recompose": "^0.6.2",
     "rxjs-es": "^5.0.0-beta.4",
+    "type-of": "^2.0.1",
     "updeep": "^0.14.0"
   }
 }
