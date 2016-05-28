@@ -6,16 +6,20 @@ require('!!script!mocha/mocha.js')
 require('!!style!css!mocha/mocha.css')
 mocha.setup({ ui: 'bdd' })
 
-TestBed.setup({
-  run () {
-    var runner = mocha.run()
-    runner.on('fail', function (test) {
-      setTimeout(() => { throw test.err })
+require('rx').config.Promise = Promise
+
+TestBed.run({
+  context: require.context(
+    './src',
+    true,
+    /\.web\.spec\.js$/
+  ),
+  runTests: function () {
+    return new Promise(function (resolve) {
+      var runner = mocha.run(resolve)
+      runner.on('fail', function (test) {
+        setTimeout(function () { throw test.err })
+      })
     })
   }
-})
-
-TestBed.receiveContext(require('./test-context'))
-module.hot.accept('./test-context', function () {
-  TestBed.receiveContext(require('./test-context'))
 })
