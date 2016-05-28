@@ -6,3 +6,10 @@ export const console = {
     postMessage({ type: 'console.log', args: encode(args) })
   }
 }
+
+export function fakeRequire (moduleName) {
+  switch (moduleName) {
+    case 'assert': return require('assert')
+    default: throw new Error('Unknown module "' + moduleName + '"')
+  }
+}

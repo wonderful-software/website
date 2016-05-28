@@ -8,33 +8,38 @@ import _ from 'lodash'
 import runCode from '../code-runner/runCode'
 
 function state川ForProps川 (props川) {
-  const initialState = { state: 'running', console: [ ] }
+  const initialState = { state: 'running', console: [ ], suiteLevel: 0 }
   const textEditors川 = (props川
     .map(props => props.from.map(_.propertyOf(props.state)))
     .distinctUntilChanged(JSON.stringify)
   )
   function reducer (state, event) {
-    console.log('RECV EVT=>', event)
-    if (event.type === 'reset') {
-      return initialState
-    } else if (event.type === 'console.log') {
-      const text = event.args.join(' ')
-      return { ...state,
-        console: [ ...state.console,
-          { _id: event._id, type: 'log', text }
-        ]
+    switch (event.type) {
+      case 'reset':
+        return initialState
+      case 'console.log': {
+        const text = event.args.join(' ')
+        return { ...state,
+          console: [ ...state.console,
+            { _id: event._id, type: 'log', text }
+          ]
+        }
       }
-    } else if (event.type === 'error') {
-      return { ...state,
-        state: 'error',
-        console: [ ...state.console,
-          { _id: event._id, type: 'error', message: event.message }
-        ]
-      }
-    } else if (event.type === 'completed') {
-      return { ...state, state: 'completed' }
-    } else {
-      return state
+      case 'error':
+        return { ...state,
+          state: 'error',
+          console: [ ...state.console,
+            { _id: event._id, type: 'error', message: event.message }
+          ]
+        }
+      case 'suite':
+        return { ...state,
+          suiteLevel: state.suiteLevel + 1
+        }
+      case 'completed':
+        return { ...state, state: 'completed' }
+      default:
+        return state
     }
   }
   return (textEditors川

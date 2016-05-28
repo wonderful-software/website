@@ -1,6 +1,7 @@
 /* global postMessage, self */
 
 void (function () {
+  const { createSuiteBuilder } = require('./createSuiteBuilder')
   const CodeRunnerWorkerServices = require('./CodeRunnerWorkerServices')
 
   function processStackTrace (stack) {
@@ -21,6 +22,7 @@ void (function () {
       })()
       if (!result) continue
       if (result.functionName === '____USER_CODE____') break
+      if (result.functionName === '____RUN_TEST_SUITE____') break
       out.push(result)
     }
     return out
@@ -29,7 +31,12 @@ void (function () {
   self.onmessage = function (e) {
     postMessage({ type: 'started' })
     try {
-      ____USER_CODE____(e.data.code, CodeRunnerWorkerServices)
+      const suiteBuilder = createSuiteBuilder()
+      ____USER_CODE____(e.data.code, CodeRunnerWorkerServices, suiteBuilder)
+      const suite = suiteBuilder.getSuite()
+      if (!suite.isEmpty()) {
+        ____RUN_TEST_SUITE____(suite)
+      }
       postMessage({ type: 'completed' })
     } catch (e) {
       postMessage({
@@ -41,16 +48,39 @@ void (function () {
       postMessage({ type: 'done' })
     }
   }
+
+  function ____RUN_TEST_SUITE____ (rootSuite) {
+    function runTest (test) {
+      try {
+        test.assertion()
+        postMessage({ type: 'pass', title: test.title })
+      } catch (e) {
+        const err = { message: e.message || String(e), stack: processStackTrace(e.stack) }
+        postMessage({ type: 'fail', title: test.title, err: err })
+      }
+    }
+    function runTestSuite (suite) {
+      postMessage({ type: 'suite', title: suite.title })
+      try {
+        for (const test of suite.tests) {
+          runTest(test)
+        }
+        for (const childSuite of suite.children) {
+          runTestSuite(childSuite)
+        }
+      } finally {
+        postMessage({ type: 'suite end', title: suite.title })
+      }
+    }
+    runTestSuite(rootSuite)
+  }
 })()
 
 function ____USER_CODE____ () {
   var self
   var postMessage
-  var encode
-  var { console } = arguments[1]
-  void self
-  void postMessage
-  void console
-  void encode
+  var { console, fakeRequire: require } = arguments[1]
+  var { describe, it } = arguments[2]
+  void (self, describe, it, postMessage, console, require)
   eval(arguments[0]) // eslint-disable-line no-eval
 }

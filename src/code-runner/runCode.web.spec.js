@@ -1,7 +1,6 @@
 /* global describe, it */
 import runCode from './runCode'
 import assert from 'assert'
-import decode from '../serializr/decode'
 
 describe('runCode', () => {
   it('runs my code', async () => {
@@ -10,7 +9,7 @@ describe('runCode', () => {
     }
     const result = await runCode(options).timeout(1000).toArray().toPromise()
     const log = getEventWithTypeFromResult('console.log', result)
-    assert.deepEqual(decode(log.args), [ 'meow' ])
+    assert.deepEqual(log.args, [ 'meow' ])
   })
 
   it('reports error', async () => {
@@ -25,11 +24,66 @@ describe('runCode', () => {
     assert.equal(error.message, 'meow')
     assert.equal(error.stack.length, 4)
   })
+
+  it('runs mocha suite', async () => {
+    const options = {
+      code: `
+        var assert = require('assert')
+        describe('addition', function () {
+          it('works', function () {
+            assert.equal(1 + 1, 2)
+          })
+        })
+        describe('multiplication', function () {
+          it('failing spec example', function () {
+            assert.equal(2 * 3, 9)
+          })
+          it('has identity', function () {
+            assert.equal(1 * 1, 1)
+          })
+        })
+      `
+    }
+    const result = await runCode(options).timeout(1000).toArray().toPromise()
+    ensureNoError(result)
+    {
+      const suites = getEventsWithTypeFromResult('suite', result)
+      assert.equal(suites[0].title, '(root)')
+      assert.equal(suites[1].title, 'addition')
+      assert.equal(suites[2].title, 'multiplication')
+    }
+    {
+      const suiteEnds = getEventsWithTypeFromResult('suite end', result)
+      assert.equal(suiteEnds[0].title, 'addition')
+      assert.equal(suiteEnds[1].title, 'multiplication')
+      assert.equal(suiteEnds[2].title, '(root)')
+    }
+    {
+      const passes = getEventsWithTypeFromResult('pass', result)
+      assert.equal(passes[0].title, 'works')
+      assert.equal(passes[1].title, 'has identity')
+    }
+    {
+      const failures = getEventsWithTypeFromResult('fail', result)
+      assert.equal(failures[0].title, 'failing spec example')
+      assert.equal(failures[0].err.message, '6 == 9')
+      console.log(failures[0].err.stack)
+    }
+  })
 })
+
+function getEventsWithTypeFromResult (eventType, result) {
+  return result.filter(event => event.type === eventType)
+}
+
+function ensureNoError (result) {
+  const error = getEventsWithTypeFromResult('error', result)[0]
+  if (error) throw new Error('Script error: ' + error.message)
+}
 
 function getEventWithTypeFromResult (eventType, result) {
   const eventTypes = result.map(event => event.type)
-  const event = result.filter(event => event.type === eventType)[0]
+  const event = getEventsWithTypeFromResult(eventType, result)[0]
   assert(event, 'expected "' + eventType + '" event among events: ' + eventTypes)
   return event
 }
