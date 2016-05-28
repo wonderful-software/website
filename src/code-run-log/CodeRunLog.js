@@ -5,38 +5,52 @@ import { Observable } from 'rx'
 import { mapPropsStream } from 'rx-recompose'
 import cx from 'classnames'
 import _ from 'lodash'
-
-function runCode (code) {
-  const consoleLog = [ ]
-  return new Promise((resolve, reject) => {
-    const console = { log: (x) => consoleLog.push(x) }
-    try {
-      const f = new Function('console', code)
-      f(console)
-      resolve(consoleLog)
-    } catch (e) {
-      reject(e)
-    }
-  })
-}
+import runCode from '../code-runner/runCode'
 
 function state川ForProps川 (props川) {
+  const initialState = { state: 'running', console: [ ] }
   const textEditors川 = (props川
     .map(props => props.from.map(_.propertyOf(props.state)))
     .distinctUntilChanged(JSON.stringify)
   )
-  const result川 = (textEditors川
+  function reducer (state, event) {
+    console.log('RECV EVT=>', event)
+    if (event.type === 'reset') {
+      return initialState
+    } else if (event.type === 'console.log') {
+      const text = event.args.join(' ')
+      return { ...state,
+        console: [ ...state.console,
+          { _id: event._id, type: 'log', text }
+        ]
+      }
+    } else if (event.type === 'error') {
+      return { ...state,
+        state: 'error',
+        console: [ ...state.console,
+          { _id: event._id, type: 'error', message: event.message }
+        ]
+      }
+    } else if (event.type === 'completed') {
+      return { ...state, state: 'completed' }
+    } else {
+      return state
+    }
+  }
+  return (textEditors川
+    .debounce(100)
     .flatMapLatest((code) =>
-      Observable.fromPromise(
-        runCode(code.join('\n;\n'))
-        .then(result => ({ state: 'completed', result: result.join('\n') }))
-        .catch(error => ({ state: 'error', error: error }))
-      )
-      .startWith({ state: 'running', result: '(running…)' })
+      runCode({
+        code: code.join('\n;\n')
+      }).startWith({ type: 'reset' })
     )
-    .debounce(138)
+    .map(event => ({ ...event, _id: _.uniqueId() }))
+    .startWith(initialState)
+    .scan(reducer)
+    .debounce(100)
+    .startWith(initialState)
+    .do(x => console.log('STATE => ', x))
   )
-  return result川.startWith({ state: 'running', result: '(running…)' })
 }
 
 const enhance = compose(
@@ -47,11 +61,25 @@ const enhance = compose(
   ))
 )
 
-const CodeRunLog = ({ result, state, error }) => h('pre', {
+const CodeRunLog = ({ console, state, error }) => h('pre', {
   styleName: cx('root', {
     isRunning: state === 'running',
     isErrored: state === 'error'
   })
-}, [ error ? error.toString() : result ])
+}, [
+  console.map(entry => {
+    switch (entry.type) {
+      case 'error':
+        return h('div.error', { key: entry._id }, [
+          h('strong', { }, [ 'Error: ' ]),
+          entry.message
+        ])
+      case 'log':
+        return h('div', { key: entry._id }, entry.text)
+      default:
+        return null
+    }
+  })
+])
 
 export default enhance(CodeRunLog)

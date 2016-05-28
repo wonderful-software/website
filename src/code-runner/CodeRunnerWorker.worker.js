@@ -4,7 +4,7 @@ void (function () {
   const CodeRunnerWorkerServices = require('./CodeRunnerWorkerServices')
 
   function processStackTrace (stack) {
-    const lines = stack.split('\n')
+    const lines = String(stack).split('\n')
     const out = [ ]
     for (const line of lines) {
       if (/Error:/.test(line)) continue
@@ -32,7 +32,11 @@ void (function () {
       ____USER_CODE____(e.data.code, CodeRunnerWorkerServices)
       postMessage({ type: 'completed' })
     } catch (e) {
-      postMessage({ type: 'errored', message: e.message, stack: processStackTrace(e.stack) })
+      postMessage({
+        type: 'error',
+        message: e.message || String(e),
+        stack: processStackTrace(e.stack)
+      })
     } finally {
       postMessage({ type: 'done' })
     }

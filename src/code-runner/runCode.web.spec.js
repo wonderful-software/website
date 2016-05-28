@@ -21,7 +21,7 @@ describe('runCode', () => {
              a()`
     }
     const result = await runCode(options).timeout(1000).toArray().toPromise()
-    const error = getEventWithTypeFromResult('errored', result)
+    const error = getEventWithTypeFromResult('error', result)
     assert.equal(error.message, 'meow')
     assert.equal(error.stack.length, 4)
   })
