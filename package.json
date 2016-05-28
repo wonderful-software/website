@@ -21,6 +21,7 @@
   "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com> (http://dt.in.th/)",
   "license": "CC-BY-NC-SA-4.0",
   "devDependencies": {
+    "@kadira/storybook": "^1.28.1",
     "autoprefixer": "^6.3.5",
     "babel-core": "^6.9.0",
     "babel-eslint": "^6.0.4",

@@ -2,6 +2,7 @@
 
 .root
   composes font-size-minus-1 from 'ws/theme/typography.styl'
+  composes font-family-code from 'ws/theme/typography.styl'
   composes background-g50 from 'ws/theme/textures.styl'
   line-height beat(0.6666667)
   $border-width = 1px
@@ -10,7 +11,6 @@
   padding "calc(%s - %s)" % ($padding $border-width)
   border-radius beat(0.25)
   overflow-x auto
-  font-family $code-font
 
 .root.isRunning
   opacity 0.5
@@ -19,5 +19,25 @@
 .root.isErrored
   border-color #f88
 
+.suite
+  composes font-family-main from 'ws/theme/typography.styl'
+  composes font-size-1 from 'ws/theme/typography.styl'
+  line-height beat(1)
+
+.pass, .fail
+  composes font-family-main from 'ws/theme/typography.styl'
+  &::before
+    display inline-block
+    width beat(1)
+    text-align center
+
+.pass::before
+  content '✔︎'
+  color #679A3C /* ไทยโทน: เขียวถั่ว */
+
+.fail::before
+  content '✘'
+
 .error
-  color #f66
+.fail
+  color #BD2329 /* ไทยโทน: ก้ามปูอสุรา */
