@@ -1,4 +1,9 @@
 {
   presets: [ 'es2015-webpack', 'stage-2' ],
-  plugins: [ 'transform-runtime' ]
+  plugins: [ 'transform-runtime' ],
+  env: {
+    test: {
+      plugins: [ '__coverage__' ]
+    }
+  }
 }

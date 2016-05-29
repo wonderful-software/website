@@ -12,6 +12,15 @@ const markdown = (
   })
   .use(require('markdown-it-footnote'))
   .use(require('markdown-it-deflist'))
+  .use(require('markdown-it-container'), 'note', {
+    render (tokens, idx) {
+      if (tokens[idx].nesting === 1) {
+        return '<div class="✎ △ ‼︎">'
+      } else {
+        return '</div>'
+      }
+    }
+  })
   // .use(require('markdown-it-math'), MATH_OPTIONS)
 )
 
