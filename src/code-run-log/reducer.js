@@ -1,3 +1,4 @@
+/* eslint pure/pure: 2 */
 import u from 'updeep'
 
 const initialState = { state: 'running', console: [ ], suiteLevel: -1 }
