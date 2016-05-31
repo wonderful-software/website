@@ -1,6 +1,6 @@
-import Content from 'ws/markdown/Content'
 import Layout from './Layout'
 import SeriesPageTitle from './SeriesPageTitle'
+import SeriesContent from './SeriesContent'
 import h from 'react-hyperscript'
 
 export default function renderSeriesContentPage (data) {
@@ -9,6 +9,6 @@ export default function renderSeriesContentPage (data) {
       title: data.attributes.title,
       subtitle: data.attributes.subtitle
     }),
-    h(Content, { content: data.body, main: true })
+    h(SeriesContent, { content: data.body, main: true })
   ])
 }
