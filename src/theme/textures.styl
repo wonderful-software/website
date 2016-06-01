@@ -1,39 +1,38 @@
+@require './settings.styl'
 @require './texture-classes.styl'
 
-$main-gray = #f5f4f3
-
 .background-g50
-  background-color mix($main-gray, white)
+  background-color $color-background-g50
 
 .background-g100
-  background-color $main-gray
+  background-color $color-background-g100
 
 .background-g150
-  background-color darken($main-gray, 5%)
+  background-color $color-background-g150
 
 .background-g200
-  background-color darken($main-gray, 10%)
+  background-color $color-background-g200
 
 .text-center
   text-align center
 
 .color-dim
-  @extend $color-dim
+  @extend $$color-dim
 
 .color-g300
-  color darken($main-gray, 30%)
+  color $color-g300
 
 .color-g400
-  color darken($main-gray, 40%)
+  color $color-g400
 
 .color-g500
-  color darken($main-gray, 50%)
+  color $color-g500
 
 .color-g600
-  color darken($main-gray, 60%)
+  color $color-g600
 
 .color-g700
-  color darken($main-gray, 70%)
+  color $color-g700
 
 .color-g800
   color #353433

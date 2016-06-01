@@ -4,8 +4,23 @@ $base-line-height = 35px
 $main-font = Source Sans Pro, Segoe UI, CS ChatThai, Lucida Grande, sans-serif
 $code-font = Roboto Mono, Andale Mono, sans-serif
 $thai-head-font = Kanit, Thonburi, Leelawadee, Lucida Grande, sans-serif
-$link-color = #069 // ไทยโทน: ฟ้า
 
+// Colors
+$link-color = #069 // ไทยโทน: ฟ้า
+$main-gray = #f5f4f3
+$color-background-g50 = mix($main-gray, white)
+$color-background-g100 = $main-gray
+$color-background-g150 = darken($main-gray, 5%)
+$color-background-g200 = darken($main-gray, 10%)
+$color-g200 = darken($main-gray, 20%)
+$color-g300 = darken($main-gray, 30%)
+$color-g400 = darken($main-gray, 40%)
+$color-g500 = darken($main-gray, 50%)
+$color-g600 = darken($main-gray, 60%)
+$color-g700 = darken($main-gray, 70%)
+$color-g800 = #353433
+
+// Vertical rhythm
 beat(n)
   return n * 1rem * ($base-line-height / $base-font-size)
 
