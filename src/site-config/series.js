@@ -28,7 +28,7 @@ function createBuilder () {
     switch (role.type) {
       case 'seriesInfo':
         series.push({
-          path: ('/' + role.seriesName + '/index.html'),
+          path: ('/' + role.seriesName + '/'),
           key,
           seriesName: role.seriesName,
           attributes: data
@@ -47,8 +47,7 @@ function createBuilder () {
           path: ('/' +
             role.seriesName + '/' +
             role.episodeName + '/' +
-            (role.pageName === 'index' ? 'index' : role.pageName + '/index') +
-            '.html'
+            (role.pageName === 'index' ? '' : role.pageName + '/')
           ),
           key,
           seriesName: role.seriesName,

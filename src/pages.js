@@ -14,6 +14,6 @@ export const pages = { }
 {
   const context = require.context('./series', true, /\.md$/)
   for (const page of seriesPages) {
-    pages[page.path] = () => renderSeriesContentPage(context(page.key))
+    pages[page.path.replace(/\/$/, '/index.html')] = () => renderSeriesContentPage(page, context(page.key))
   }
 }

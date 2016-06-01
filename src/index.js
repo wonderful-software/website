@@ -10,3 +10,10 @@ System.import('./runPage.js').then(
   ({ runPage }) => { runPage() },
   (e) => console.error('Cannot run page!', e)
 )
+
+// Debug
+if (window.location.hostname === 'localhost') {
+  window.onkeydown = function (e) {
+    if (e.keyCode === 71 && e.ctrlKey) document.body.classList.toggle('リズム')
+  }
+}
