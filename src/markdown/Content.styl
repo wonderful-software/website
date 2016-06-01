@@ -115,6 +115,14 @@ setup-typography-rhythm(size)
     a.footnote-backref
       text-decoration none
 
+.root.is-main > :global(.☐) > :global(.footnotes)
+  &::before
+    content: 'Footnotes'
+    display block
+    margin-top beat(1)
+    @extend $color-dim
+    line-height beat(1)
+
 .root.is-main > :global(.☐) > :global(.‼︎),
 .root.is-main > :global(.☐) > figure
   width 700px
